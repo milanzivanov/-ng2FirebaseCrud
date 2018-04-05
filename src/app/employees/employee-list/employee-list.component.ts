@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { EmployeeService } from '../../shared/employee.service';
+import { Employee } from '../../shared/employee.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-employee-list',
@@ -7,9 +10,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmployeeListComponent implements OnInit {
 
-  constructor() { }
+  employeeList: Employee[];
+
+  constructor(
+    private _employeeService: EmployeeService,
+    private tostr: ToastrService) {
+  }
 
   ngOnInit() {
+    const x = this._employeeService.getData();
+    x.snapshotChanges().subscribe(item => {
+      this.employeeList = [];
+      item.forEach(element => {
+        const y = element.payload.toJSON();
+        y['$key'] = element.key;
+        this.employeeList.push(y as Employee);
+      });
+    });
+  }
+
+  onEdit(emp: Employee) {
+    this._employeeService.selectedEmployee = Object.assign({}, emp);
+  }
+
+  onDelete(key: string) {
+    if (confirm('Are you sure to delete this record ?') === true) {
+      this._employeeService.deleteEmployee(key);
+      this.tostr.warning('Deleted Successfully', 'Employee register');
+    }
   }
 
 }
