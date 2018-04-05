@@ -14,7 +14,7 @@ export class EmployeeListComponent implements OnInit {
 
   constructor(
     private _employeeService: EmployeeService,
-    private tostr: ToastrService) {
+    private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class EmployeeListComponent implements OnInit {
   onDelete(key: string) {
     if (confirm('Are you sure to delete this record ?') === true) {
       this._employeeService.deleteEmployee(key);
-      this.tostr.warning('Deleted Successfully', 'Employee register');
+      this.toastr.warning('Deleted Successfully', 'Employee register');
     }
   }
 
