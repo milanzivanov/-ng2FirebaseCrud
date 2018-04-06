@@ -29,7 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     CommonModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 5000,
       positionClass: 'toast-top-right',
       progressBar: true
     }),

@@ -10,13 +10,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EmployeeListComponent implements OnInit {
 
-  employeeList: Employee[];
+  employeeList: Employee[] = [];
 
   constructor(
     private _employeeService: EmployeeService,
     private toastr: ToastrService) {
   }
 
+  // create
   ngOnInit() {
     const x = this._employeeService.getData();
     x.snapshotChanges().subscribe(item => {
@@ -28,11 +29,14 @@ export class EmployeeListComponent implements OnInit {
       });
     });
   }
-
+  // update
   onEdit(emp: Employee) {
     this._employeeService.selectedEmployee = Object.assign({}, emp);
+    // spred operator
+    // this._employeeService.selectedEmployee = {...emp};
   }
 
+  // delite
   onDelete(key: string) {
     if (confirm('Are you sure to delete this record ?') === true) {
       this._employeeService.deleteEmployee(key);

@@ -6,17 +6,19 @@ import { Employee} from './employee.model';
 @Injectable()
 export class EmployeeService {
   // question???
-  employeeList: AngularFireList<any>;
-  selectedEmployee: Employee = new Employee();
+  public employeeList: AngularFireList<any>;
+  // question???
+  public selectedEmployee: Employee = new Employee();
 
   constructor(private _fb: AngularFireDatabase) { }
-  // r
+  // read
   getData() {
     this.employeeList = this._fb.list('employees');
     return this.employeeList;
   }
 
-  // c
+  // create
+  // we gona get back Employee
   insertEmployee(employee: Employee) {
     this.employeeList.push({
       name: employee.name,
@@ -26,7 +28,7 @@ export class EmployeeService {
     });
   }
 
-  // u
+  // update
   updateEmpolyee(employee: Employee) {
     this.employeeList.update(employee.$key, {
       name: employee.name,
@@ -36,7 +38,7 @@ export class EmployeeService {
     });
   }
 
-  // d
+  // delite
   deleteEmployee($key: string) {
     this.employeeList.remove($key);
   }
